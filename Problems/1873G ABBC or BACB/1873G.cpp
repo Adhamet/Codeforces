@@ -1,40 +1,41 @@
+#include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
 
-#define el '\n'
+#define adhamet ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define ll long long
+#define vi vector<int>
+#define vll vector<ll>
+#define pLL pair<ll,ll>
+#define F first
+#define S second
+#define el '\n'
+#define dbg(v) cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
 
 int main()
 {
-    ios_base::sync_with_stdio(0);   cin.tie(0); cout.tie(0);
+    adhamet;
 
     int t;  cin >> t;
-    for(int i = 1; i<=t; i++) {
+    while(t--) {
         string s;   cin >> s;
-        int n = s.length(), cnt = 0;
-        bool all = (s[0] == 'B' || s[n-1] == 'B');
-        for(int i = 0; i < n-1; i++) if(s[i]==s[i+1] && s[i]=='B')
-            all = true;
-        
-        int curr = 0;
-        vector<int> lens;
-        for(int i = 0; i < n; i++) {
-            if(s[i] == 'A') curr++;
+        int acount=0,bcount=0;
+        if(s[0]=='A') acount++;
+        else bcount++;
+        vi agroups;
+        for(int i = 1; i < s.size(); i++) {
+            if(s[i]=='A') acount++;
             else {
-                if(curr!=0) lens.push_back(curr);
-                curr = 0;
+                if(s[i-1]=='A') {
+                    agroups.push_back(acount);
+                    acount=0;
+                }
+                bcount++;
             }
         }
-        if(curr!=0) lens.push_back(curr);
-
-        sort(lens.begin(), lens.end());
-        if(lens.empty()) return cout << 0 << el, 0;
-
-        int tot = 0;
-        if(all) tot += lens[0];
-        for(int i = 1; i < lens.size(); i++) tot+=lens[i];
-
-        cout << tot << el;
+        if(acount>0) agroups.push_back(acount);
+        if(bcount>=agroups.size()) cout << s.size() - bcount << el;
+        else cout << s.size() - bcount - *min_element(agroups.begin(),agroups.end()) << el;
     }
 
     return 0;
