@@ -12,13 +12,6 @@ using pll = pair<ll, ll>;
 
 // const int N = 2e5+10;
 
-bool check(int st, int end, int mxSt, int mxEnd) {
-	if (end >= mxSt && end <= mxEnd || st >= mxSt && st <= mxEnd || st <= mxSt && end >= mxEnd) {
-		return true;
-	}
-
-	return false;
-}
 int main() {
 	ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 
